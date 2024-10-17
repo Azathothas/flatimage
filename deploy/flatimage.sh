@@ -31,7 +31,7 @@ function _fetch_static()
   eget "https://github.com/ruanformigoni/busybox-static-musl" --asset "$(uname -m)" --to "./bin/busybox"
 
   # Fetch lsof
-  eget "https://bin.ajam.dev/$(uname -m)/lsof" --asset "$(uname -m)" --to "./bin/lsof"
+  eget "https://bin.ajam.dev/$(uname -m)/lsof" --to "./bin/lsof"
   #eget "https://github.com/ruanformigoni/lsof-static-musl" --asset "$(uname -m)" --to "./bin/lsof"
 
   # Fetch bwrap
