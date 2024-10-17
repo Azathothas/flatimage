@@ -10,7 +10,7 @@
 
 #shellcheck disable=2155
 
-set +e
+#set -e
 
 FIM_DIR_SCRIPT=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 FIM_DIR="$(dirname "$FIM_DIR_SCRIPT")"
