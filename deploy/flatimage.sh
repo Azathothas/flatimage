@@ -28,32 +28,37 @@ function _fetch_static()
   [[ ! -f "./eget" || $(stat -c%s "./eget") -le 1000 ]] && echo -e "\n[-] Failed to download eget\n" && exit 1
 
   # Fetch busybox
-  eget "https://github.com/ruanformigoni/busybox-static-musl" --asset "$(uname -m)" --to "./bin/busybox"
+  eget "https://github.com/ruanformigoni/busybox-static-musl" --asset "$(uname -m)" --to "./bin/busybox" 2>/dev/null
+  [[ ! -f "./bin/busybox" || $(stat -c%s "./bin/busybox") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/Baseutils/busybox/busybox" --to "./bin/busybox"
 
   # Fetch lsof
-  eget "https://github.com/ruanformigoni/lsof-static-musl" --asset "$(uname -m)" --to "./bin/lsof"
+  eget "https://github.com/ruanformigoni/lsof-static-musl" --asset "$(uname -m)" --to "./bin/lsof" 2>/dev/null
   [[ ! -f "./bin/lsof" || $(stat -c%s "./bin/lsof") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/lsof" --to "./bin/lsof"
 
   # Fetch bwrap
-  eget "https://github.com/ruanformigoni/bubblewrap-musl-static" --asset "$(uname -m)" --to "./bin/bwrap"
-
+  eget "https://github.com/ruanformigoni/bubblewrap-musl-static" --asset "$(uname -m)" --to "./bin/bwrap" 2>/dev/null
+  [[ ! -f "./bin/bwrap" || $(stat -c%s "./bin/bwrap") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/bwrap" --to "./bin/bwrap"
+  
   # Fetch proot
-  eget "https://github.com/ruanformigoni/proot-static-musl" --asset "$(uname -m)" --to "./bin/proot"
+  eget "https://github.com/ruanformigoni/proot-static-musl" --asset "$(uname -m)" --to "./bin/proot" 2>/dev/null
+  [[ ! -f "./bin/proot" || $(stat -c%s "./bin/proot") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/proot" --to "./bin/proot"
 
   # Fetch overlayfs
-  eget "https://github.com/ruanformigoni/fuse-overlayfs-static-musl" --asset "$(uname -m)" --to "./bin/overlayfs"
+  eget "https://github.com/ruanformigoni/fuse-overlayfs-static-musl" --asset "$(uname -m)" --to "./bin/overlayfs" 2>/dev/null
   [[ ! -f "./bin/overlayfs" || $(stat -c%s "./bin/overlayfs") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/fuse-overlayfs" --to "./bin/overlayfs"
 
   # Fetch ciopfs
-  eget "https://github.com/ruanformigoni/ciopfs-static-musl" --asset "$(uname -m)" --to "./bin/ciopfs"
+  eget "https://github.com/ruanformigoni/ciopfs-static-musl" --asset "$(uname -m)" --to "./bin/ciopfs" 2>/dev/null
+  [[ ! -f "./bin/ciopfs" || $(stat -c%s "./bin/ciopfs") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/ciopfs" --to "./bin/ciopfs"
   # cp "$HOME"/Repositories/ciopfs/ciopfs ./bin/ciopfs
 
   # Fetch squashfuse
-  # eget "https://github.com/ruanformigoni/squashfuse-static-musl" --asset "$(uname -m)" --to "./bin/squashfuse"
+  # eget "https://github.com/ruanformigoni/squashfuse-static-musl" --asset "$(uname -m)" --to "./bin/squashfuse" 2>/dev/null
+  #[[ ! -f "./bin/squashfuse" || $(stat -c%s "./bin/squashfuse") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/squashfuse" --to "./bin/squashfuse"
 
   # Fetch dwarfs
   if [ "$(uname  -m)" == "aarch64" ]; then
-    eget "https://bin.ajam.dev/$(uname -m)/dwarfs-tools" --to "./bin/dwarfs_aio"
+    eget "https://bin.ajam.dev/$(uname -m)/dwarfs-tools" --to "./bin/dwarfs_aio" 2>/dev/null
   elif [ "$(uname  -m)" == "x86_64" ]; then
     eget "https://github.com/ruanformigoni/dwarfs" --asset "universal" --to "./bin/dwarfs_aio"
   fi
@@ -61,7 +66,8 @@ function _fetch_static()
   ln -s dwarfs_aio bin/dwarfs
 
   # Fetch bash
-  eget "https://github.com/ruanformigoni/bash-static-musl" --asset "$(uname -m)" --to "./bin/bash"
+  eget "https://github.com/ruanformigoni/bash-static-musl" --asset "$(uname -m)" --to "./bin/bash" 2>/dev/null
+  [[ ! -f "./bin/bash" || $(stat -c%s "./bin/bash") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/bash" --to "./bin/bash"
 
   # # Setup xdg scripts
   # cp "$FIM_DIR"/src/xdg/xdg-* ./bin
