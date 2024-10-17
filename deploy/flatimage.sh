@@ -24,34 +24,34 @@ function _fetch_static()
   mkdir -p bin
 
   # Fetch busybox
-  wget -O ./bin/busybox "https://github.com/ruanformigoni/busybox-static-musl/releases/download/7e2c5b6/busybox-x86_64"
+  wget -O ./bin/busybox "https://bin.ajam.dev/$(uname -m)/Baseutils/busybox/busybox"
 
   # Fetch lsof
-  wget -O./bin/lsof "https://github.com/ruanformigoni/lsof-static-musl/releases/download/720c914/lsof-x86_64"
+  wget -O./bin/lsof "https://bin.ajam.dev/$(uname -m)/lsof"
 
   # Fetch bwrap
-  wget -O ./bin/bwrap "https://github.com/ruanformigoni/bubblewrap-musl-static/releases/download/0526b78/bwrap-x86_64"
+  wget -O ./bin/bwrap "https://bin.ajam.dev/$(uname -m)/bwrap"
 
   # Fetch proot
-  wget -O ./bin/proot "https://github.com/ruanformigoni/proot-static-musl/releases/download/bf747c8/proot-x86_64"
+  wget -O ./bin/proot "https://bin.ajam.dev/$(uname -m)/proot"
 
   # Fetch overlayfs
-  wget -O ./bin/overlayfs "https://github.com/ruanformigoni/fuse-overlayfs-static-musl/releases/download/1861741/fuse-overlayfs-x86_64"
+  wget -O ./bin/overlayfs "https://bin.ajam.dev/$(uname -m)/fuse-overlayfs"
 
   # Fetch ciopfs
-  wget -O ./bin/ciopfs "https://github.com/ruanformigoni/ciopfs-static-musl/releases/download/39d5d5a/ciopfs-x86_64"
+  wget -O ./bin/ciopfs "https://bin.ajam.dev/$(uname -m)/ciopfs"
   # cp "$HOME"/Repositories/ciopfs/ciopfs ./bin/ciopfs
 
   # Fetch squashfuse
-  # wget -O ./bin/squashfuse "https://github.com/ruanformigoni/squashfuse-static-musl/releases/download/f2b4067/squashfuse-x86_64"
+  # wget -O ./bin/squashfuse "https://bin.ajam.dev/$(uname -m)/squashfuse"
 
   # Fetch dwarfs
-  wget -O bin/dwarfs_aio "https://github.com/ruanformigoni/dwarfs/releases/download/187a5b65/dwarfs-universal"
+  wget -O bin/dwarfs_aio "https://bin.ajam.dev/$(uname -m)/dwarfs-tools"
   ln -s dwarfs_aio bin/mkdwarfs
   ln -s dwarfs_aio bin/dwarfs
 
   # Fetch bash
-  wget -O ./bin/bash "https://github.com/ruanformigoni/bash-static-musl/releases/download/b604d6c/bash-x86_64"
+  wget -O ./bin/bash "https://bin.ajam.dev/$(uname -m)/bash"
 
   # # Setup xdg scripts
   # cp "$FIM_DIR"/src/xdg/xdg-* ./bin
@@ -194,9 +194,8 @@ function _create_subsystem_alpine()
 
   # Build
   rm -rf /tmp/"$dist"
-  wget http://dl-cdn.alpinelinux.org/alpine/v3.12/main/x86_64/apk-tools-static-2.10.8-r1.apk
-  tar zxf apk-tools-static-*.apk
-  ./sbin/apk.static --arch x86_64 -X http://dl-cdn.alpinelinux.org/alpine/latest-stable/main/ -U --allow-untrusted --root /tmp/"$dist" --initdb add alpine-base
+  wget "http://bin.ajam.dev/$(uname -m)/apk-tools" -O "./apk.static" && chmod +x "./apk.static"
+  "./apk.static" --arch "$(uname -m)" -X "http://dl-cdn.alpinelinux.org/alpine/latest-stable/main/" -U --allow-untrusted --root /tmp/"$dist" --initdb add alpine-base
 
   rm -rf /tmp/"$dist"/dev /tmp/"$dist"/target
 
