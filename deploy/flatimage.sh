@@ -30,31 +30,38 @@ function _fetch_static()
   # Fetch busybox
   eget "https://github.com/ruanformigoni/busybox-static-musl" --asset "$(uname -m)" --to "./bin/busybox" 2>/dev/null
   [[ ! -f "./bin/busybox" || $(stat -c%s "./bin/busybox") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/Baseutils/busybox/busybox" --to "./bin/busybox"
+  [[ ! -f "./bin/busybox" || $(stat -c%s "./bin/busybox") -le 1000 ]] && echo -e "\n[-] Failed to download busybox\n" && exit 1
 
   # Fetch lsof
   eget "https://github.com/ruanformigoni/lsof-static-musl" --asset "$(uname -m)" --to "./bin/lsof" 2>/dev/null
   [[ ! -f "./bin/lsof" || $(stat -c%s "./bin/lsof") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/lsof" --to "./bin/lsof"
+  [[ ! -f "./bin/lsof" || $(stat -c%s "./bin/lsof") -le 1000 ]] && echo -e "\n[-] Failed to download lsof\n" && exit 1
 
   # Fetch bwrap
   eget "https://github.com/ruanformigoni/bubblewrap-musl-static" --asset "$(uname -m)" --to "./bin/bwrap" 2>/dev/null
   [[ ! -f "./bin/bwrap" || $(stat -c%s "./bin/bwrap") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/bwrap" --to "./bin/bwrap"
+  [[ ! -f "./bin/bwrap" || $(stat -c%s "./bin/bwrap") -le 1000 ]] && echo -e "\n[-] Failed to download bwrap\n" && exit 1
   
   # Fetch proot
   eget "https://github.com/ruanformigoni/proot-static-musl" --asset "$(uname -m)" --to "./bin/proot" 2>/dev/null
   [[ ! -f "./bin/proot" || $(stat -c%s "./bin/proot") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/proot" --to "./bin/proot"
+  [[ ! -f "./bin/proot" || $(stat -c%s "./bin/proot") -le 1000 ]] && echo -e "\n[-] Failed to download proot\n" && exit 1
 
   # Fetch overlayfs
   eget "https://github.com/ruanformigoni/fuse-overlayfs-static-musl" --asset "$(uname -m)" --to "./bin/overlayfs" 2>/dev/null
   [[ ! -f "./bin/overlayfs" || $(stat -c%s "./bin/overlayfs") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/fuse-overlayfs" --to "./bin/overlayfs"
+  [[ ! -f "./bin/overlayfs" || $(stat -c%s "./bin/overlayfs") -le 1000 ]] && echo -e "\n[-] Failed to download overlayfs\n" && exit 1
 
   # Fetch ciopfs
   eget "https://github.com/ruanformigoni/ciopfs-static-musl" --asset "$(uname -m)" --to "./bin/ciopfs" 2>/dev/null
   [[ ! -f "./bin/ciopfs" || $(stat -c%s "./bin/ciopfs") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/ciopfs" --to "./bin/ciopfs"
+  [[ ! -f "./bin/ciopfs" || $(stat -c%s "./bin/ciopfs") -le 1000 ]] && echo -e "\n[-] Failed to download ciopfs\n" && exit 1
   # cp "$HOME"/Repositories/ciopfs/ciopfs ./bin/ciopfs
 
   # Fetch squashfuse
   # eget "https://github.com/ruanformigoni/squashfuse-static-musl" --asset "$(uname -m)" --to "./bin/squashfuse" 2>/dev/null
   #[[ ! -f "./bin/squashfuse" || $(stat -c%s "./bin/squashfuse") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/squashfuse" --to "./bin/squashfuse"
+  #[[ ! -f "./bin/squashfuse" || $(stat -c%s "./bin/squashfuse") -le 1000 ]] && echo -e "\n[-] Failed to download squashfuse\n" && exit 1
 
   # Fetch dwarfs
   if [ "$(uname  -m)" == "aarch64" ]; then
@@ -62,12 +69,14 @@ function _fetch_static()
   elif [ "$(uname  -m)" == "x86_64" ]; then
     eget "https://github.com/ruanformigoni/dwarfs" --asset "universal" --to "./bin/dwarfs_aio"
   fi
+  [[ ! -f "./bin/dwarfs_aio" || $(stat -c%s "./bin/dwarfs_aio") -le 1000 ]] && echo -e "\n[-] Failed to download dwarfs_aio\n" && exit 1
   ln -s dwarfs_aio bin/mkdwarfs
   ln -s dwarfs_aio bin/dwarfs
 
   # Fetch bash
   eget "https://github.com/ruanformigoni/bash-static-musl" --asset "$(uname -m)" --to "./bin/bash" 2>/dev/null
   [[ ! -f "./bin/bash" || $(stat -c%s "./bin/bash") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/bash" --to "./bin/bash"
+  [[ ! -f "./bin/bash" || $(stat -c%s "./bin/bash") -le 1000 ]] && echo -e "\n[-] Failed to download bash\n" && exit 1
 
   # # Setup xdg scripts
   # cp "$FIM_DIR"/src/xdg/xdg-* ./bin
