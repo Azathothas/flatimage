@@ -31,8 +31,8 @@ function _fetch_static()
   eget "https://github.com/ruanformigoni/busybox-static-musl" --asset "$(uname -m)" --to "./bin/busybox"
 
   # Fetch lsof
-  eget "https://bin.ajam.dev/$(uname -m)/lsof" --to "./bin/lsof"
-  #eget "https://github.com/ruanformigoni/lsof-static-musl" --asset "$(uname -m)" --to "./bin/lsof"
+  eget "https://github.com/ruanformigoni/lsof-static-musl" --asset "$(uname -m)" --to "./bin/lsof"
+  [[ ! -f "./bin/lsof" || $(stat -c%s "./bin/lsof") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/lsof" --to "./bin/lsof"
 
   # Fetch bwrap
   eget "https://github.com/ruanformigoni/bubblewrap-musl-static" --asset "$(uname -m)" --to "./bin/bwrap"
@@ -41,8 +41,8 @@ function _fetch_static()
   eget "https://github.com/ruanformigoni/proot-static-musl" --asset "$(uname -m)" --to "./bin/proot"
 
   # Fetch overlayfs
-  eget "https://bin.ajam.dev/$(uname -m)/fuse-overlayfs" --to "./bin/overlayfs"
-  #eget "https://github.com/ruanformigoni/fuse-overlayfs-static-musl" --asset "$(uname -m)" --to "./bin/overlayfs"
+  eget "https://github.com/ruanformigoni/fuse-overlayfs-static-musl" --asset "$(uname -m)" --to "./bin/overlayfs"
+  [[ ! -f "./bin/overlayfs" || $(stat -c%s "./bin/overlayfs") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/fuse-overlayfs" --to "./bin/overlayfs"
 
   # Fetch ciopfs
   eget "https://github.com/ruanformigoni/ciopfs-static-musl" --asset "$(uname -m)" --to "./bin/ciopfs"
@@ -52,7 +52,11 @@ function _fetch_static()
   # eget "https://github.com/ruanformigoni/squashfuse-static-musl" --asset "$(uname -m)" --to "./bin/squashfuse"
 
   # Fetch dwarfs
-  eget "https://github.com/mhx/dwarfs" --asset "Linux" --asset "$(uname -m)" --asset "universal" --asset "^stack" --to "./bin/dwarfs_aio"
+  if [ "$(uname  -m)" == "aarch64" ]; then
+    eget "https://bin.ajam.dev/$(uname -m)/dwarfs-tools" --to "./bin/dwarfs_aio"
+  elif [ "$(uname  -m)" == "x86_64" ]; then
+    eget "https://github.com/ruanformigoni/dwarfs" --asset "universal" --to "./bin/dwarfs_aio"
+  fi
   ln -s dwarfs_aio bin/mkdwarfs
   ln -s dwarfs_aio bin/dwarfs
 
