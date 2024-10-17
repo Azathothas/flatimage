@@ -24,6 +24,7 @@ function _fetch_static()
   mkdir -p bin
 
   # Fetch eget
+  set -x
   wget "https://bin.ajam.dev/$(uname -m)/eget" -O "./eget" && chmod +x "./eget"
   [[ ! -f "./eget" || $(stat -c%s "./eget") -le 1000 ]] && echo -e "\n[-] Failed to download eget\n" && exit 1
 
@@ -77,7 +78,7 @@ function _fetch_static()
   eget "https://github.com/ruanformigoni/bash-static-musl" --asset "$(uname -m)" --to "./bin/bash" 2>/dev/null
   [[ ! -f "./bin/bash" || $(stat -c%s "./bin/bash") -le 1000 ]] && eget "https://bin.ajam.dev/$(uname -m)/bash" --to "./bin/bash"
   [[ ! -f "./bin/bash" || $(stat -c%s "./bin/bash") -le 1000 ]] && echo -e "\n[-] Failed to download bash\n" && exit 1
-
+  set +x
   # # Setup xdg scripts
   # cp "$FIM_DIR"/src/xdg/xdg-* ./bin
 
