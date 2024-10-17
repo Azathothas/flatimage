@@ -23,35 +23,41 @@ function _fetch_static()
 {
   mkdir -p bin
 
+  # Fetch eget
+  wget "https://bin.ajam.dev/$(uname -m)/eget" -O "./eget" && chmod +x "./eget"
+  [[ ! -f "./eget" || $(stat -c%s "./eget") -le 1000 ]] && echo -e "\n[-] Failed to download eget\n" && exit 1
+
   # Fetch busybox
-  wget -O ./bin/busybox "https://bin.ajam.dev/$(uname -m)/Baseutils/busybox/busybox"
+  eget "https://github.com/ruanformigoni/busybox-static-musl" --asset "$(uname -m)" --to "./bin/busybox"
 
   # Fetch lsof
-  wget -O./bin/lsof "https://bin.ajam.dev/$(uname -m)/lsof"
+  eget "https://bin.ajam.dev/$(uname -m)/lsof" --asset "$(uname -m)" --to "./bin/lsof"
+  #eget "https://github.com/ruanformigoni/lsof-static-musl" --asset "$(uname -m)" --to "./bin/lsof"
 
   # Fetch bwrap
-  wget -O ./bin/bwrap "https://bin.ajam.dev/$(uname -m)/bwrap"
+  eget "https://github.com/ruanformigoni/bubblewrap-musl-static" --asset "$(uname -m)" --to "./bin/bwrap"
 
   # Fetch proot
-  wget -O ./bin/proot "https://bin.ajam.dev/$(uname -m)/proot"
+  eget "https://github.com/ruanformigoni/proot-static-musl" --asset "$(uname -m)" --to "./bin/proot"
 
   # Fetch overlayfs
-  wget -O ./bin/overlayfs "https://bin.ajam.dev/$(uname -m)/fuse-overlayfs"
+  eget "https://bin.ajam.dev/$(uname -m)/fuse-overlayfs" --to "./bin/overlayfs"
+  #eget "https://github.com/ruanformigoni/fuse-overlayfs-static-musl" --asset "$(uname -m)" --to "./bin/overlayfs"
 
   # Fetch ciopfs
-  wget -O ./bin/ciopfs "https://bin.ajam.dev/$(uname -m)/ciopfs"
+  eget "https://github.com/ruanformigoni/ciopfs-static-musl" --asset "$(uname -m)" --to "./bin/ciopfs"
   # cp "$HOME"/Repositories/ciopfs/ciopfs ./bin/ciopfs
 
   # Fetch squashfuse
-  # wget -O ./bin/squashfuse "https://bin.ajam.dev/$(uname -m)/squashfuse"
+  # eget "https://github.com/ruanformigoni/squashfuse-static-musl" --asset "$(uname -m)" --to "./bin/squashfuse"
 
   # Fetch dwarfs
-  wget -O bin/dwarfs_aio "https://bin.ajam.dev/$(uname -m)/dwarfs-tools"
+  eget "https://github.com/mhx/dwarfs" --asset "Linux" --asset "$(uname -m)" --asset "universal" --asset "^stack" --to "./bin/dwarfs_aio"
   ln -s dwarfs_aio bin/mkdwarfs
   ln -s dwarfs_aio bin/dwarfs
 
   # Fetch bash
-  wget -O ./bin/bash "https://bin.ajam.dev/$(uname -m)/bash"
+  eget "https://github.com/ruanformigoni/bash-static-musl" --asset "$(uname -m)" --to "./bin/bash"
 
   # # Setup xdg scripts
   # cp "$FIM_DIR"/src/xdg/xdg-* ./bin
