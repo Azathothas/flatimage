@@ -325,7 +325,7 @@ function _create_subsystem_arch()
   sed -i 's|DEFAULT_REPO_URL=".*"|DEFAULT_REPO_URL="http://linorg.usp.br/archlinux"|' ./arch-bootstrap/arch-bootstrap.sh
   sed -Ei 's|^\s+curl|curl --retry 5|' ./arch-bootstrap/arch-bootstrap.sh
   sed 's/^/-- /' ./arch-bootstrap/arch-bootstrap.sh
-  ./arch-bootstrap/arch-bootstrap.sh arch
+  ./arch-bootstrap/arch-bootstrap.sh "$(uname -m)"
 
   # Update mirrorlist
   cp "$FIM_DIR/sources/arch.list" arch/etc/pacman.d/mirrorlist
