@@ -66,7 +66,7 @@ function _fetch_static()
 
   # Fetch dwarfs
   if [ "$(uname  -m)" == "aarch64" ]; then
-    eget "https://bin.ajam.dev/$(uname -m)/dwarfs-tools" --to "./bin/dwarfs_aio" 2>/dev/null
+    eget "https://github.com/Azathothas/dwarfs/releases/download/arm64v8/dwarfs-universal" --to "./bin/dwarfs_aio" 2>/dev/null
   elif [ "$(uname  -m)" == "x86_64" ]; then
     eget "https://github.com/ruanformigoni/dwarfs" --asset "universal" --to "./bin/dwarfs_aio"
   fi
