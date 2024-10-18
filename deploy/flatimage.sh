@@ -220,7 +220,7 @@ function _create_subsystem_alpine()
 
   # Build
   rm -rf /tmp/"$dist"
-  wget "http://bin.ajam.dev/$(uname -m)/apk-tools" -O "./apk.static" && chmod +x "./apk.static"
+  wget "http://bin.ajam.dev/$(uname -m)/apk-static" -O "./apk.static" && chmod +x "./apk.static"
   "./apk.static" --arch "$(uname -m)" -X "http://dl-cdn.alpinelinux.org/alpine/latest-stable/main/" -U --allow-untrusted --root /tmp/"$dist" --initdb add alpine-base
 
   rm -rf /tmp/"$dist"/dev /tmp/"$dist"/target
@@ -325,7 +325,7 @@ function _create_subsystem_arch()
   sed -i 's|DEFAULT_REPO_URL=".*"|DEFAULT_REPO_URL="http://linorg.usp.br/archlinux"|' ./arch-bootstrap/arch-bootstrap.sh
   sed -Ei 's|^\s+curl|curl --retry 5|' ./arch-bootstrap/arch-bootstrap.sh
   sed 's/^/-- /' ./arch-bootstrap/arch-bootstrap.sh
-  ./arch-bootstrap/arch-bootstrap.sh "$(uname -m)"
+  ./arch-bootstrap/arch-bootstrap.sh -a "$(uname -m)" arch
 
   # Update mirrorlist
   cp "$FIM_DIR/sources/arch.list" arch/etc/pacman.d/mirrorlist
