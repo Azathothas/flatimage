@@ -322,7 +322,7 @@ function _create_subsystem_arch()
   git clone "https://github.com/ruanformigoni/arch-bootstrap.git"
 
   # Build
-  sed -i 's|DEFAULT_REPO_URL=".*"|DEFAULT_REPO_URL="http://linorg.usp.br/archlinux"|' ./arch-bootstrap/arch-bootstrap.sh
+  #sed -i 's|DEFAULT_REPO_URL=".*"|DEFAULT_REPO_URL="http://linorg.usp.br/archlinux"|' ./arch-bootstrap/arch-bootstrap.sh
   sed -Ei 's|^\s+curl|curl --retry 5|' ./arch-bootstrap/arch-bootstrap.sh
   sed 's/^/-- /' ./arch-bootstrap/arch-bootstrap.sh
   ./arch-bootstrap/arch-bootstrap.sh -a "$(uname -m)" arch
