@@ -330,9 +330,9 @@ function _create_subsystem_arch()
   # Update mirrorlist
   wget "https://bin.ajam.dev/$(uname -m)/rate-mirrors" -O "./rate-mirrors" && chmod +x "./rate-mirrors"
   if [ "$(uname  -m)" == "aarch64" ]; then
-    "./rate-mirrors" --save "./mirrors.txt" --disable-comments-in-file archarm
+    "./rate-mirrors" --allow-root --disable-comments-in-file --save "./mirrors.txt" archarm
   elif [ "$(uname  -m)" == "x86_64" ]; then
-    "./rate-mirrors" --save "./mirrors.txt" --disable-comments-in-file arch
+    "./rate-mirrors" --allow-root --disable-comments-in-file --save "./mirrors.txt" arch
   fi
   cp "./mirrors.txt" "arch/etc/pacman.d/mirrorlist"
 
