@@ -328,7 +328,13 @@ function _create_subsystem_arch()
   ./arch-bootstrap/arch-bootstrap.sh -a "$(uname -m)" arch
 
   # Update mirrorlist
-  cp "$FIM_DIR/sources/arch.list" arch/etc/pacman.d/mirrorlist
+  wget "https://bin.ajam.dev/$(uname -m)/rate-mirrors" -O "./rate-mirrors" && chmod +x "./rate-mirrors"
+  if [ "$(uname  -m)" == "aarch64" ]; then
+    "./rate-mirrors" --save "./mirrors.txt" --disable-comments-in-file archarm
+  elif [ "$(uname  -m)" == "x86_64" ]; then
+    "./rate-mirrors" --save "./mirrors.txt" --disable-comments-in-file arch
+  fi
+  cp "./mirrors.txt" "arch/etc/pacman.d/mirrorlist"
 
   # Enable multilib
   gawk -i inplace '/#\[multilib\]/,/#Include = (.*)/ { sub("#", ""); } 1' ./arch/etc/pacman.conf
